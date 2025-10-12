@@ -13,7 +13,7 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #0a0a0a;
+    background-color: #121212;
     color: #ffffff;
 }
 
@@ -28,7 +28,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(18, 18, 18, 0.95);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 1rem 0;
@@ -87,7 +87,9 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
+    height: 100vh;      /* fallback */
+    height: 100svh;     /* iOS Safari small viewport units */
+    height: 100dvh;     /* dynamic viewport to avoid gaps when address bar hides/shows */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,7 +102,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 0; /* keep within normal stacking so it doesn't fall behind the page */
+}
+
+/* Ensure the background video fully covers the hero without gaps */
+.hero__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 40%; /* bias crop upward to avoid any bottom letterbox */
+    display: block; /* remove inline baseline gap */
+    pointer-events: none;
+    transform: scale(1.02); /* slight zoom to guarantee edge-to-edge coverage */
+    transform-origin: center;
 }
 
 .hero__video-placeholder {
@@ -120,6 +137,8 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .hero__video-note {
@@ -132,7 +151,12 @@ body {
 .hero__content {
     text-align: center;
     max-width: 800px;
-    z-index: 1;
+    z-index: 2; /* above overlay/video */
+}
+
+/* Subtle fade at hero bottom to blend into next section and avoid any seam */
+.hero::after {
+    content: none; /* disable bottom gradient to avoid any band */
 }
 
 .hero__headline {
@@ -185,7 +209,17 @@ body {
 /* Philosophy Section */
 .philosophy {
     padding: 8rem 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    background:
+        radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, #1b0648 0%, #180640 55%, #14053a 100%);
+}
+
+/* Remove accidental gaps between stacked sections */
+section {
+    margin: 0;
+}
+section > *:first-child {
+    margin-top: 0;
 }
 
 .philosophy__headline {
@@ -211,7 +245,7 @@ body {
 /* Work Section */
 .work {
     padding: 8rem 0;
-    background: #0a0a0a;
+    background: #121212;
 }
 
 .work__headline {
@@ -300,41 +334,84 @@ body {
     margin-bottom: 2rem;
 }
 
-.work__ventures {
+/* Shared list wrapper for work spokes */
+.work__spoke-list,
+.work__ventures { /* legacy */
     display: grid;
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
 }
 
-.work__venture h4 {
+.work__spoke h4,
+.work__venture h4 { /* legacy */
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: #667eea;
 }
 
-.work__venture p {
+.work__spoke p,
+.work__venture p { /* legacy */
     margin-bottom: 1rem;
     color: #cccccc;
 }
 
-.work__venture ul {
+.work__spoke ul,
+.work__venture ul { /* legacy */
     list-style: none;
     padding-left: 0;
 }
 
-.work__venture li {
+.work__spoke li,
+.work__venture li { /* legacy */
     margin-bottom: 0.5rem;
     color: #cccccc;
     padding-left: 1rem;
     position: relative;
 }
 
-.work__venture li::before {
+.work__spoke li::before,
+.work__venture li::before { /* legacy */
     content: '•';
     color: #667eea;
     position: absolute;
     left: 0;
 }
+
+/* Base block for any work spoke item */
+/* Base block for any work spoke item; non-breaking minimal style */
+.work__spoke {
+    display: grid;
+    grid-template-columns: 96px 1fr; /* logo column + content */
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.work__spoke-media {
+    width: 96px;
+    min-width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.work__spoke-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background:
+        radial-gradient(120% 80% at 30% 20%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, #232323 0%, #2e2e2e 100%);
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.work__spoke-body {
+    min-width: 0; /* allow text to wrap nicely */
+}
+
+/* Optional modifiers per spoke type can be added later as needed */
 
 .work__creations-list {
     list-style: none;
@@ -358,7 +435,9 @@ body {
 /* Creator Section */
 .creator {
     padding: 8rem 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    background:
+        radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, #1b0648 0%, #180640 55%, #14053a 100%);
 }
 
 .creator__headline {
@@ -366,21 +445,83 @@ body {
     font-weight: 700;
     text-align: center;
     margin-bottom: 4rem;
-    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .creator__content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 420px;
     gap: 4rem;
     align-items: center;
 }
 
+.work__spoke {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    background: #181818;
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.work__spoke-media {
+    width: 96px;
+    min-width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.work__spoke-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background:
+        radial-gradient(120% 80% at 30% 20%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, #232323 0%, #2e2e2e 100%);
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.work__spoke h4 {
+    text-align: left;
+    margin-bottom: 0.75rem;
+    margin-top: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #667eea;
+}
+.work__spoke p {
+    text-align: left;
+    margin-bottom: 1rem;
+    color: #cccccc;
+    font-size: 1.08rem;
+}
+.work__spoke ul {
+    text-align: left;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 540px;
+    margin-bottom: 1.5rem;
+}
+
+/* Keep creator text left-aligned on desktop */
+.creator__text { 
+    text-align: left; 
+}
+
 .creator__text p {
     font-size: 1.25rem;
-    line-height: 1.8;
-    color: #cccccc;
+    line-height: 1.6;
+    color: #e0e0e0;
     margin-bottom: 2rem;
+    max-width: 540px;
 }
 
 .creator__cta {
@@ -411,10 +552,60 @@ body {
     font-style: italic;
 }
 
+/* Creator image container as a circular mask */
+.creator__image {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    background: none; /* keep neutral so ring color is consistent */
+    position: relative;
+    isolation: isolate;
+}
+
+/* Accent ring variant (gold) */
+.creator__image--accent::before {
+    content: '';
+    position: absolute;
+    inset: -14px; /* thicker ring */
+    border-radius: 50%;
+    background: conic-gradient(from 180deg, #f2a71b, #ffc45a, #f2a71b);
+    z-index: -1;
+    filter: drop-shadow(0 8px 28px rgba(242, 167, 27, 0.28));
+}
+
+/* Monochrome ring variant (toggle by swapping class) */
+.creator__image--mono::before {
+    content: '';
+    position: absolute;
+    inset: -14px; /* thicker ring */
+    border-radius: 50%;
+    background: #121212;
+    z-index: -1;
+    filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.45));
+}
+
+/* Creator image styles */
+.creator__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 0; /* masked by container */
+    box-shadow: none;
+}
+
+/* Nudge the portrait to the right on desktop for visual balance */
+.creator__image {
+    justify-self: end;
+}
+
 /* Insights Section */
 .insights {
     padding: 8rem 0;
-    background: #0a0a0a;
+    background: #121212;
 }
 
 .insights__headline {
@@ -456,7 +647,9 @@ body {
 /* Invitation Section */
 .invitation {
     padding: 8rem 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    background:
+        radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, #1b0648 0%, #180640 55%, #14053a 100%);
     text-align: center;
 }
 
@@ -542,7 +735,35 @@ body {
 }
 
 .footer__links a {
+    font-size: 1.05rem;
     color: #a0a3b1;
+}
+button.work__spoke-btn, .work__spoke-btn, .work__spoke .work__spoke-btn {
+    display: inline-block !important;
+    background: transparent !important;
+    color: #667eea !important;
+    border: 2px solid #667eea !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+    margin-top: 1.25rem !important;
+    text-align: left !important;
+    outline: none !important;
+    appearance: none !important;
+}
+.work__spoke-btn:hover,
+.work__spoke .work__spoke-btn:hover {
+    background: #667eea !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25) !important;
+}
+
+.footer__links a {
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 400;
@@ -724,6 +945,7 @@ body {
         grid-template-columns: 1fr;
         text-align: center;
     }
+    .creator__image { justify-self: center; }
     
     .work__cards {
         grid-template-columns: 1fr;
@@ -731,6 +953,21 @@ body {
     
     .work__content {
         padding: 2rem;
+    }
+
+    .work__spoke {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .work__spoke-media,
+    .work__spoke-logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+    }
+    .work__spoke-list {
+        grid-template-columns: 1fr;
     }
     
     .container {

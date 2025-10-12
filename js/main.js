@@ -33,9 +33,9 @@ function initializeNavigation() {
     // Navigation background on scroll
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
-            nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            nav.style.background = 'rgba(18, 18, 18, 0.98)';
         } else {
-            nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            nav.style.background = 'rgba(18, 18, 18, 0.95)';
         }
     });
 }
@@ -83,7 +83,7 @@ function initializeWorkSection() {
 
 // Scroll effects and animations
 function initializeScrollEffects() {
-    // Intersection Observer for fade-in animations
+    // Intersection Observer for fade-in animations (apply to content blocks only)
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -98,27 +98,20 @@ function initializeScrollEffects() {
         });
     }, observerOptions);
     
-    // Observe sections for scroll animations
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        // Set initial state for animation
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'all 0.8s ease-out';
-        
-        observer.observe(section);
+    // Observe specific content containers, not entire sections
+    const targets = document.querySelectorAll('.hero__content, .philosophy__content, .work__cards, .creator__content, .insights__content, .invitation');
+    targets.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.8s ease-out';
+        observer.observe(el);
     });
     
-    // Parallax effect for hero section
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const heroBackground = document.querySelector('.hero__background');
-        
-        if (heroBackground) {
-            const rate = scrolled * -0.5;
-            heroBackground.style.transform = `translateY(${rate}px)`;
-        }
-    });
+    // Disable parallax to ensure seamless edge between hero and next section
+    const heroBackground = document.querySelector('.hero__background');
+    if (heroBackground) {
+        heroBackground.style.transform = 'translateY(0)';
+    }
 }
 
 // CTA button functionality
