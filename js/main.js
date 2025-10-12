@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeWorkSection();
     initializeScrollEffects();
     initializeCTAButtons();
+    initializeNewsletterForm();
 });
 
 // Navigation functionality
@@ -274,6 +275,45 @@ function initializeLazyLoading() {
     images.forEach(img => imageObserver.observe(img));
 }
 
+// Newsletter form functionality
+function initializeNewsletterForm() {
+    const form = document.getElementById('newsletter-form');
+    const successMessage = document.getElementById('newsletter-success');
+    const inputGroup = document.querySelector('.footer__newsletter-input-group');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(form);
+            
+            // Submit to Netlify
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Show success message
+                inputGroup.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Optional: Reset after 5 seconds
+                setTimeout(() => {
+                    inputGroup.style.display = 'flex';
+                    successMessage.style.display = 'none';
+                    form.reset();
+                }, 5000);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // You could add error handling here
+            });
+        });
+    }
+}
+
 // Export functions for potential module use
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -281,6 +321,7 @@ if (typeof module !== 'undefined' && module.exports) {
         initializeWorkSection,
         initializeScrollEffects,
         initializeCTAButtons,
-        showTemporaryMessage
+        showTemporaryMessage,
+        initializeNewsletterForm
     };
 }

@@ -193,10 +193,15 @@
                 <div class="footer__section footer__newsletter">
                     <h4 class="footer__title">GET THE BLUEPRINTS</h4>
                     <p class="footer__newsletter-description">Actionable insights on Conscious Engineering, sent from the lab to your inbox.</p>
-                    <form name="newsletter" method="POST" action="/" data-netlify="true" class="footer__newsletter-form">
+                    <form name="newsletter" method="POST" action="/" data-netlify="true" class="footer__newsletter-form" id="newsletter-form">
                         <input type="hidden" name="form-name" value="newsletter">
-                        <input type="email" name="email" class="footer__newsletter-input" placeholder="Enter your email" required>
-                        <button type="submit" class="footer__newsletter-button">Subscribe</button>
+                        <div class="footer__newsletter-input-group">
+                            <input type="email" name="email" class="footer__newsletter-input" placeholder="Enter your email" required>
+                            <button type="submit" class="footer__newsletter-button">Subscribe</button>
+                        </div>
+                        <div class="footer__newsletter-success" id="newsletter-success" style="display: none;">
+                            <p>✅ Success! You're now subscribed to The Blueprints.</p>
+                        </div>
                     </form>
                 </div>
             </div>
