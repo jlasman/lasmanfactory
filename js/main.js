@@ -298,13 +298,8 @@ function initializeNewsletterForm() {
                 // Show success message
                 inputGroup.style.display = 'none';
                 successMessage.style.display = 'block';
-                
-                // Optional: Reset after 5 seconds
-                setTimeout(() => {
-                    inputGroup.style.display = 'flex';
-                    successMessage.style.display = 'none';
-                    form.reset();
-                }, 5000);
+
+                // Keep success message visible; do not auto-reset the form
             })
             .catch((error) => {
                 console.error('Error:', error);
