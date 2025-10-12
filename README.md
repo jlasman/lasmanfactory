@@ -1,106 +1,208 @@
-# The Lab - Homepage Design Canvas 3.0<<<<<<< HEAD
+# The Lab - Jeremy Lasman's Homepage# The Lab - Homepage Design Canvas 3.0<<<<<<< HEAD
 
-# The Lab - Homepage Design Canvas 3.0
 
-A modern, interactive website showcasing "The Lab" concept - an immersive experience that fuses quantum consciousness with quantum technology to build new worlds.
 
-A modern, interactive website showcasing "The Lab" concept - an immersive experience that fuses quantum consciousness with quantum technology to build new worlds.
+> Quantum-powered evolution for people and systems# The Lab - Homepage Design Canvas 3.0
 
-## 🚀 Project Overview
 
-## 🚀 Project Overview
 
-This project implements a fully integrated "Lab" model homepage featuring:
+A modern, interactive website showcasing "The Lab" concept - an immersive digital experience that fuses quantum consciousness with quantum technology to build new worlds.A modern, interactive website showcasing "The Lab" concept - an immersive experience that fuses quantum consciousness with quantum technology to build new worlds.
 
-This project implements a fully integrated "Lab" model homepage featuring:
 
-- **Hero Section**: Dynamic video background with immersive entry experience
+
+🌐 **Live Site**: [lasmanfactory.netlify.app](https://lasmanfactory.netlify.app)A modern, interactive website showcasing "The Lab" concept - an immersive experience that fuses quantum consciousness with quantum technology to build new worlds.
+
+
+
+## 🚀 Overview## 🚀 Project Overview
+
+
+
+This project implements Jeremy Lasman's homepage featuring:## 🚀 Project Overview
+
+
+
+- **Hero Section**: Immersive entry experience with dynamic contentThis project implements a fully integrated "Lab" model homepage featuring:
+
+- **Core Philosophy**: The foundational "why" behind all work
+
+- **Interactive Work Sections**: Three-card layout showcasing Ventures, Creations, and InitiativesThis project implements a fully integrated "Lab" model homepage featuring:
+
+- **Creator Profile**: Jeremy's journey and expertise
+
+- **Insights Hub**: Dynamic section for latest articles and thoughts- **Hero Section**: Dynamic video background with immersive entry experience
+
+- **Social Integration**: Direct connections to all platforms
 
 - **Core Philosophy**: Explanation of the foundational "why" behind all work- **Hero Section**: Dynamic video background with immersive entry experience
 
+## 🏗️ Brand Architecture
+
 - **Interactive Work Sections**: Three-card layout (Ventures/Creations/Initiatives) with dynamic content switching- **Core Philosophy**: Explanation of the foundational "why" behind all work
 
-- **Creator Profile**: Jeremy Lasman's journey and expertise- **Interactive Work Sections**: Three-card layout (Ventures/Creations/Initiatives) with dynamic content switching
+### The Three Spokes
 
-- **Insights Hub**: Dynamic section for latest articles and thoughts- **Creator Profile**: Jeremy Lasman's journey and expertise
+- **The Passion Company**: Personal transformation (iSELF Platform, Passion Dojo, 1:1 Mentorship)- **Creator Profile**: Jeremy Lasman's journey and expertise- **Interactive Work Sections**: Three-card layout (Ventures/Creations/Initiatives) with dynamic content switching
 
-- **Call to Action**: Invitation to engage with the ecosystem- **Insights Hub**: Dynamic section for latest articles and thoughts
+- **Quantum Star Systems**: Enterprise innovation venture
 
-- **Call to Action**: Invitation to engage with the ecosystem
+- **Stellar Art Gallery**: Fine art and cultural curation- **Insights Hub**: Dynamic section for latest articles and thoughts- **Creator Profile**: Jeremy Lasman's journey and expertise
 
-## 🏗️ Architecture
 
-## 🏗️ Architecture
 
-### Brand Hierarchy
+## 🛠️ Technical Stack- **Call to Action**: Invitation to engage with the ecosystem- **Insights Hub**: Dynamic section for latest articles and thoughts
 
-- **The Passion Company**: Parent brand for personal transformation### Brand Hierarchy
 
-  - iSELF Platform: Self-guided clarity system- **The Passion Company**: Parent brand for personal transformation
 
-  - Passion Dojo: Premium group training  - iSELF Platform: Self-guided clarity system
+- **HTML5**: Semantic structure with accessibility- **Call to Action**: Invitation to engage with the ecosystem
 
-  - 1:1 Private Mentorship: Exclusive access for leaders  - Passion Dojo: Premium group training
+- **CSS3**: Modern styling with Grid, Flexbox, and custom properties
 
-- **Quantum Star Systems**: Enterprise innovation venture  - 1:1 Private Mentorship: Exclusive access for leaders
+- **Vanilla JavaScript**: Interactive functionality and smooth animations## 🏗️ Architecture
 
-- **Stellar Art Gallery**: Fine art and cultural curation- **Quantum Star Systems**: Enterprise innovation venture
+- **SVG Icons**: Self-contained social media icons (no external dependencies)
 
-- **Stellar Art Gallery**: Fine art and cultural curation
+- **Responsive Design**: Mobile-first approach## 🏗️ Architecture
 
-### Technical Stack
 
-- **HTML5**: Semantic structure with accessibility in mind### Technical Stack
 
-- **CSS3**: Modern styling with CSS Grid, Flexbox, and custom properties- **HTML5**: Semantic structure with accessibility in mind
+## 📁 Project Structure### Brand Hierarchy
 
-- **Vanilla JavaScript**: Interactive functionality and smooth animations- **CSS3**: Modern styling with CSS Grid, Flexbox, and custom properties
 
-- **Responsive Design**: Mobile-first approach with fluid layouts- **Vanilla JavaScript**: Interactive functionality and smooth animations
+
+```- **The Passion Company**: Parent brand for personal transformation### Brand Hierarchy
+
+/
+
+├── index.html              # Main homepage  - iSELF Platform: Self-guided clarity system- **The Passion Company**: Parent brand for personal transformation
+
+├── css/
+
+│   └── main.css           # All styling  - Passion Dojo: Premium group training  - iSELF Platform: Self-guided clarity system
+
+├── js/
+
+│   └── main.js            # Interactive functionality  - 1:1 Private Mentorship: Exclusive access for leaders  - Passion Dojo: Premium group training
+
+└── README.md              # This file
+
+```- **Quantum Star Systems**: Enterprise innovation venture  - 1:1 Private Mentorship: Exclusive access for leaders
+
+
+
+## 🎨 Design Features- **Stellar Art Gallery**: Fine art and cultural curation- **Quantum Star Systems**: Enterprise innovation venture
+
+
+
+- **Dark theme** with gradient accents (#667eea to #764ba2)- **Stellar Art Gallery**: Fine art and cultural curation
+
+- **Inter typography** for modern, clean appearance
+
+- **Interactive hover states** and smooth transitions### Technical Stack
+
+- **Scroll-triggered animations** using Intersection Observer API
+
+- **Three-column footer** with organized navigation and social links- **HTML5**: Semantic structure with accessibility in mind### Technical Stack
+
+
+
+## 🚀 Getting Started- **CSS3**: Modern styling with CSS Grid, Flexbox, and custom properties- **HTML5**: Semantic structure with accessibility in mind
+
+
+
+### Development- **Vanilla JavaScript**: Interactive functionality and smooth animations- **CSS3**: Modern styling with CSS Grid, Flexbox, and custom properties
+
+```bash
+
+# Clone the repository- **Responsive Design**: Mobile-first approach with fluid layouts- **Vanilla JavaScript**: Interactive functionality and smooth animations
+
+git clone https://github.com/jlasman/lasmanfactory.git
 
 - **Responsive Design**: Mobile-first approach with fluid layouts
 
-## 🎨 Design Features
+# Open in browser (use a local server for best experience)
 
-## 🎨 Design Features
+# VS Code: Use Live Server extension## 🎨 Design Features
 
-### Visual Elements
+# Python: python3 -m http.server 8000
 
-- Dark theme with gradient accents (#667eea to #764ba2)### Visual Elements
-
-- Typography: Inter font family for modern, clean appearance- Dark theme with gradient accents (#667eea to #764ba2)
-
-- Interactive hover states and smooth transitions- Typography: Inter font family for modern, clean appearance
-
-- Parallax scrolling effects- Interactive hover states and smooth transitions
-
-- Intersection Observer API for scroll-triggered animations- Parallax scrolling effects
-
-- Intersection Observer API for scroll-triggered animations
-
-### Interactive Components
-
-- Fixed navigation with smooth scrolling### Interactive Components
-
-- Three-card interactive layout with dynamic content switching- Fixed navigation with smooth scrolling
-
-- Hover effects and micro-interactions- Three-card interactive layout with dynamic content switching
-
-- Responsive grid layouts- Hover effects and micro-interactions
-
-- Call-to-action buttons with gradient backgrounds- Responsive grid layouts
-
-- Call-to-action buttons with gradient backgrounds
-
-## 📁 Project Structure
-
-## 📁 Project Structure
+# Node.js: npx http-server## 🎨 Design Features
 
 ```
 
-/```
+### Visual Elements
 
-├── index.html              # Main homepage/
+### Key Files
+
+- **Content**: Edit `index.html` for text and structure changes- Dark theme with gradient accents (#667eea to #764ba2)### Visual Elements
+
+- **Styling**: Modify `css/main.css` for visual adjustments
+
+- **Interactivity**: Update `js/main.js` for functionality changes- Typography: Inter font family for modern, clean appearance- Dark theme with gradient accents (#667eea to #764ba2)
+
+
+
+## 🔧 Customization- Interactive hover states and smooth transitions- Typography: Inter font family for modern, clean appearance
+
+
+
+### Colors- Parallax scrolling effects- Interactive hover states and smooth transitions
+
+- Primary gradient: `#667eea` to `#764ba2`
+
+- Background: `#0a0a0a` (dark)- Intersection Observer API for scroll-triggered animations- Parallax scrolling effects
+
+- Text: `#ffffff` (white) and `#cccccc` (light gray)
+
+- Intersection Observer API for scroll-triggered animations
+
+### Responsive Breakpoints
+
+- Mobile: < 768px### Interactive Components
+
+- Tablet: 768px - 1024px  
+
+- Desktop: > 1024px- Fixed navigation with smooth scrolling### Interactive Components
+
+
+
+## 🎯 Future Enhancements- Three-card interactive layout with dynamic content switching- Fixed navigation with smooth scrolling
+
+
+
+- Video background integration- Hover effects and micro-interactions- Three-card interactive layout with dynamic content switching
+
+- CMS integration for insights section
+
+- Functional contact forms- Responsive grid layouts- Hover effects and micro-interactions
+
+- Performance optimizations
+
+- Analytics integration- Call-to-action buttons with gradient backgrounds- Responsive grid layouts
+
+
+
+## 📱 Browser Support- Call-to-action buttons with gradient backgrounds
+
+
+
+Modern browsers with CSS Grid, Flexbox, and Intersection Observer API support.## 📁 Project Structure
+
+
+
+## 📄 License## 📁 Project Structure
+
+
+
+Proprietary project containing custom branding and content for Jeremy Lasman.```
+
+
+
+---/```
+
+
+
+**Built with passion and precision for The Lab - where quantum consciousness meets quantum technology.**├── index.html              # Main homepage/
 
 ├── css/├── index.html              # Main homepage
 
