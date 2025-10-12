@@ -602,13 +602,7 @@ body {
     border-color: rgba(102, 126, 234, 0.4);
 }
 
-.footer__social-link i {
-    transition: transform 0.3s ease;
-}
 
-.footer__social-link:hover i {
-    transform: scale(1.1);
-}
 
 .footer__social-svg {
     width: 1.2rem;
@@ -620,18 +614,7 @@ body {
     transform: scale(1.1);
 }
 
-/* Fallback styling for when Font Awesome doesn't load */
-.footer__social-link i::before {
-    font-style: normal;
-    font-weight: 900;
-    display: inline-block;
-}
-
-/* Ensure icons are visible */
-.footer__social-link i {
-    font-size: 1.2rem;
-    line-height: 1;
-}
+/* All social icons are now SVGs for maximum compatibility */
 
 /* Responsive Design */
 @media (max-width: 768px) {
