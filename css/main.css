@@ -620,6 +620,19 @@ body {
     transform: scale(1.1);
 }
 
+/* Fallback styling for when Font Awesome doesn't load */
+.footer__social-link i::before {
+    font-style: normal;
+    font-weight: 900;
+    display: inline-block;
+}
+
+/* Ensure icons are visible */
+.footer__social-link i {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav__menu {
