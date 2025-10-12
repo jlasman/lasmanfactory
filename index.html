@@ -73,7 +73,6 @@
                     <p class="work__card-description">Using film, writing, and the curation of fine art to explore the boundaries of human potential and our technological future.</p>
                     <button class="work__card-cta">View Our Creations →</button>
                 </div>
-                
                 <div class="work__card" data-spoke="initiatives">
                     <h3 class="work__card-title">Philanthropic Initiatives</h3>
                     <p class="work__card-description">Deploying our frameworks and resources toward mission-driven projects aimed at creating a more conscious and equitable world.</p>
@@ -194,8 +193,9 @@
                 <div class="footer__section footer__newsletter">
                     <h4 class="footer__title">GET THE BLUEPRINTS</h4>
                     <p class="footer__newsletter-description">Actionable insights on Conscious Engineering, sent from the lab to your inbox.</p>
-                    <form class="footer__newsletter-form">
-                        <input type="email" class="footer__newsletter-input" placeholder="Enter your email" required>
+                    <form name="newsletter" method="POST" data-netlify="true" class="footer__newsletter-form">
+                        <input type="hidden" name="form-name" value="newsletter">
+                        <input type="email" name="email" class="footer__newsletter-input" placeholder="Enter your email" required>
                         <button type="submit" class="footer__newsletter-button">Subscribe</button>
                     </form>
                 </div>
