@@ -102,32 +102,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0; /* keep within normal stacking so it doesn't fall behind the page */
-}
-
-/* Ensure the background video fully covers the hero without gaps */
-.hero__video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 40%; /* bias crop upward to avoid any bottom letterbox */
-    display: block; /* remove inline baseline gap */
-    pointer-events: none;
-    transform: scale(1.02); /* slight zoom to guarantee edge-to-edge coverage */
-    transform-origin: center;
-}
-
-.hero__video-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0c0c0c 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    z-index: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
 }
 
 .hero__video-overlay {
@@ -136,7 +112,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 1;
     pointer-events: none;
 }
@@ -541,15 +517,16 @@ section > *:first-child {
     box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
 }
 
-.creator__image-placeholder {
-    aspect-ratio: 1;
+.creator__img-placeholder {
+    width: 100%;
+    height: 100%;
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666;
-    font-style: italic;
+    color: #ffffff;
+    font-size: 4rem;
+    font-weight: 700;
 }
 
 /* Creator image container as a circular mask */
