@@ -270,6 +270,15 @@ section > *:first-child {
     transition: all 0.3s ease;
     border: 1px solid #333;
     outline: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 769px) {
+    .work__card {
+        min-height: 280px;
+    }
 }
 
 .work__card:hover {
