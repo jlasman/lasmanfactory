@@ -42,6 +42,7 @@ Deno.serve(async (req: Request) => {
 
     const results = {
       email: { success: false, error: null as string | null },
+      audience: { success: false, error: null as string | null },
       sheets: { success: false, error: null as string | null },
     };
 
@@ -84,6 +85,39 @@ Deno.serve(async (req: Request) => {
       }
     } else {
       results.email.error = "Resend API key or notification email not configured";
+    }
+
+    // Add contact to Resend Audience
+    const resendAudienceId = Deno.env.get("RESEND_AUDIENCE_ID");
+
+    if (resendApiKey && resendAudienceId) {
+      try {
+        const audienceResponse = await fetch(
+          `https://api.resend.com/audiences/${resendAudienceId}/contacts`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${resendApiKey}`,
+            },
+            body: JSON.stringify({
+              email: record.email,
+              unsubscribed: false,
+            }),
+          }
+        );
+
+        if (audienceResponse.ok) {
+          results.audience.success = true;
+        } else {
+          const error = await audienceResponse.text();
+          results.audience.error = `Resend Audience API error: ${error}`;
+        }
+      } catch (error) {
+        results.audience.error = `Audience error: ${error.message}`;
+      }
+    } else {
+      results.audience.error = "Resend API key or audience ID not configured";
     }
 
     // Add to Google Sheets
