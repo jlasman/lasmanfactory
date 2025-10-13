@@ -62,7 +62,17 @@ export default function Work() {
   const [expandedSpoke, setExpandedSpoke] = useState(null)
 
   const toggleSpoke = (spoke) => {
-    setExpandedSpoke(expandedSpoke === spoke ? null : spoke)
+    if (expandedSpoke === spoke) {
+      setExpandedSpoke(null)
+    } else {
+      setExpandedSpoke(spoke)
+      requestAnimationFrame(() => {
+        const cardElement = document.getElementById(`card-${spoke}`)
+        if (cardElement && window.innerWidth <= 768) {
+          cardElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        }
+      })
+    }
   }
 
   return (
@@ -71,7 +81,7 @@ export default function Work() {
         <h2 className="work__headline">From the Lab to the Real World.</h2>
 
         <div className="work__grid">
-          <div className="work__card-wrapper">
+          <div className="work__card-wrapper" id="card-ventures">
             <WorkCard
               id="ventures"
               title="Commercial Ventures"
@@ -84,7 +94,7 @@ export default function Work() {
             </div>
           </div>
 
-          <div className="work__card-wrapper">
+          <div className="work__card-wrapper" id="card-creations">
             <WorkCard
               id="creations"
               title="Artistic Creations"
@@ -97,7 +107,7 @@ export default function Work() {
             </div>
           </div>
 
-          <div className="work__card-wrapper">
+          <div className="work__card-wrapper" id="card-initiatives">
             <WorkCard
               id="initiatives"
               title="Philanthropic Initiatives"
