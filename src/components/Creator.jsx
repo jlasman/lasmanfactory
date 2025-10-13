@@ -13,9 +13,7 @@ export default function Creator() {
             <button className="creator__cta">More on Jeremy's Journey</button>
           </div>
           <div className="creator__image creator__image--accent">
-            <div className="creator__img-placeholder">
-              <span>JL</span>
-            </div>
+            <img src="/assets/JL headshot.png" alt="Jeremy Lasman" />
           </div>
         </div>
       </div>
