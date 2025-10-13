@@ -18,7 +18,8 @@ export default function Footer() {
           <div className="footer__brand">
             <h2 className="footer__logo">JL</h2>
             <p className="footer__tagline">
-              Quantum-powered evolution for people and systems.
+              Quantum-powered evolution        
+              <br/>for people and systems.
             </p>
           </div>
 
