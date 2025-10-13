@@ -242,7 +242,7 @@ section > *:first-child {
     letter-spacing: -0.02em;
 }
 
-.work__accordion {
+.work__grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -251,15 +251,10 @@ section > *:first-child {
 }
 
 @media (min-width: 769px) {
-    .work__accordion {
+    .work__grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
     }
-}
-
-.work__card-wrapper {
-    display: flex;
-    flex-direction: column;
 }
 
 .work__card {
@@ -343,39 +338,40 @@ section > *:first-child {
     color: #ffffff;
 }
 
-.work__card-content {
+.work__drawer {
+    width: 100%;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    margin-top: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease,
+                margin-top 0.4s ease;
 }
 
-.work__card-content--expanded {
+.work__drawer:has(.work__drawer-content) {
     max-height: 5000px;
     opacity: 1;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
-@media (min-width: 769px) {
-    .work__card-content--expanded {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 10;
-        margin-top: 1rem;
-    }
-
-    .work__card-wrapper {
-        position: relative;
-    }
-}
-
-.work__card-content-inner {
+.work__drawer-content {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    padding: 2.5rem;
-    border-radius: 16px;
+    padding: 3rem;
+    border-radius: 20px;
     border: 1px solid #333;
+    animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .work__content-headline {
@@ -999,7 +995,7 @@ button.work__spoke-btn, .work__spoke-btn, .work__spoke .work__spoke-btn {
     }
     .creator__image { justify-self: center; }
 
-    .work__accordion {
+    .work__grid {
         gap: 1rem;
     }
 
@@ -1024,13 +1020,17 @@ button.work__spoke-btn, .work__spoke-btn, .work__spoke .work__spoke-btn {
         height: 36px;
     }
 
-    .work__card-content-inner {
-        padding: 1.5rem;
+    .work__drawer-content {
+        padding: 2rem;
     }
 
     .work__content-headline {
         font-size: 1.5rem;
         margin-bottom: 2rem;
+    }
+
+    .work__drawer {
+        margin-top: 1.5rem;
     }
 
     .work__spoke {

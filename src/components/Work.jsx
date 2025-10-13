@@ -70,14 +70,13 @@ export default function Work() {
       <div className="container">
         <h2 className="work__headline">From the Lab to the Real World.</h2>
 
-        <div className="work__accordion">
+        <div className="work__grid">
           <WorkCard
             id="ventures"
             title="Commercial Ventures"
             description="Applying our core R&D to build scalable companies and premium advisory services for ambitious leaders and industries."
             expanded={expandedSpoke === 'ventures'}
             onToggle={() => toggleSpoke('ventures')}
-            data={workData.ventures}
           />
           <WorkCard
             id="creations"
@@ -85,7 +84,6 @@ export default function Work() {
             description="Using film, writing, and the curation of fine art to explore the boundaries of human potential and our technological future."
             expanded={expandedSpoke === 'creations'}
             onToggle={() => toggleSpoke('creations')}
-            data={workData.creations}
           />
           <WorkCard
             id="initiatives"
@@ -93,9 +91,14 @@ export default function Work() {
             description="Deploying our frameworks and resources toward mission-driven projects aimed at creating a more conscious and equitable world."
             expanded={expandedSpoke === 'initiatives'}
             onToggle={() => toggleSpoke('initiatives')}
-            data={workData.initiatives}
           />
         </div>
+
+        {expandedSpoke && (
+          <div className="work__drawer">
+            <WorkContent data={workData[expandedSpoke]} />
+          </div>
+        )}
       </div>
     </section>
   )
