@@ -1,14 +1,46 @@
 import { useState } from 'react'
 import SocialLinks from './SocialLinks'
+import { supabase } from '../lib/supabase'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Newsletter signup:', email)
-    setSubmitted(true)
+    setLoading(true)
+    setError(null)
+
+    try {
+      const { error: insertError } = await supabase
+        .from('newsletter_subscriptions')
+        .insert([
+          {
+            email: email,
+            status: 'active',
+            source: 'website'
+          }
+        ])
+
+      if (insertError) {
+        if (insertError.code === '23505') {
+          setError('This email is already subscribed!')
+        } else {
+          setError('Something went wrong. Please try again.')
+        }
+        console.error('Newsletter signup error:', insertError)
+      } else {
+        setSubmitted(true)
+        setEmail('')
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again.')
+      console.error('Newsletter signup error:', err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -60,22 +92,30 @@ export default function Footer() {
             </p>
             <form onSubmit={handleSubmit} className="footer__newsletter-form">
               {!submitted ? (
-                <div className="footer__newsletter-input-group">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="footer__newsletter-input"
-                    placeholder="Enter your email"
-                    required
-                  />
-                  <button type="submit" className="footer__newsletter-button">
-                    Subscribe
-                  </button>
-                </div>
+                <>
+                  <div className="footer__newsletter-input-group">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="footer__newsletter-input"
+                      placeholder="Enter your email"
+                      required
+                      disabled={loading}
+                    />
+                    <button type="submit" className="footer__newsletter-button" disabled={loading}>
+                      {loading ? 'Subscribing...' : 'Subscribe'}
+                    </button>
+                  </div>
+                  {error && (
+                    <div className="footer__newsletter-error">
+                      <p>{error}</p>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="footer__newsletter-success">
-                  <p>✅ Success! You're now subscribed.</p>
+                  <p>Success! You're now subscribed.</p>
                 </div>
               )}
             </form>

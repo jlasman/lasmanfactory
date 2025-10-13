@@ -941,6 +941,23 @@ button.work__spoke-btn, .work__spoke-btn, .work__spoke .work__spoke-btn {
     font-weight: 500;
 }
 
+.footer__newsletter-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+.footer__newsletter-error p {
+    color: #ef4444;
+    font-size: 0.9rem;
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
