@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="hero__video-overlay"></div>
       </div>
       <div className="hero__content">
-        <h1 className="hero__headline">Welcome to the Lab.</h1>
+        <h1 className="hero__headline">Welcome to </br>the Lab.</h1>
         <p className="hero__subheadline">
           A space dedicated to a single, lifelong experiment: Fusing quantum consciousness with quantum
           technology to build new worlds—inside and out.
