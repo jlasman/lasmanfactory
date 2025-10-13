@@ -279,25 +279,14 @@ function initializeNewsletterForm() {
             e.preventDefault();
             
             // Get form data
-            const formData = new FormData(form);
-            
-            // Submit to Netlify
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                // Show success message
-                inputGroup.style.display = 'none';
-                successMessage.style.display = 'block';
+            const email = form.querySelector('input[type="email"]').value;
 
-                // Keep success message visible; do not auto-reset the form
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                // You could add error handling here
-            });
+            // Show success message
+            inputGroup.style.display = 'none';
+            successMessage.style.display = 'block';
+
+            // Log for now (can be connected to a backend later)
+            console.log('Newsletter signup:', email);
         });
     }
 }

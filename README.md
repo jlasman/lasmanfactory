@@ -4,7 +4,7 @@
 
 A modern, interactive website showcasing "The Lab" concept - an immersive digital experience that fuses quantum consciousness with quantum technology to build new worlds.
 
-🌐 **Live Site**: [lasmanfactory.netlify.app](https://lasmanfactory.netlify.app)
+🌐 **Live Site**: Hosted on Bolt
 
 ## 🚀 Overview
 
