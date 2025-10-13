@@ -565,13 +565,12 @@ section > *:first-child {
 }
 
 /* Creator image styles */
-.creator__img {
+.creator__image img {
     width: 100%;
     height: 100%;
     display: block;
     object-fit: cover;
-    border-radius: 0; /* masked by container */
-    box-shadow: none;
+    object-position: center;
 }
 
 /* Nudge the portrait to the right on desktop for visual balance */
