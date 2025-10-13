@@ -48,6 +48,7 @@ Deno.serve(async (req: Request) => {
     // Send email notification via Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     const notificationEmail = Deno.env.get("NOTIFICATION_EMAIL");
+    const fromEmail = Deno.env.get("FROM_EMAIL") || "onboarding@resend.dev";
 
     if (resendApiKey && notificationEmail) {
       try {
@@ -57,7 +58,8 @@ Deno.serve(async (req: Request) => {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${resendApiKey}`,
           },
-          body: JSON.stringify({            from: "onboarding@resend.dev",
+          body: JSON.stringify({
+            from: fromEmail,
             to: [notificationEmail],
             subject: "New Newsletter Subscriber",
             html: `
@@ -90,10 +92,21 @@ Deno.serve(async (req: Request) => {
       try {
         const serviceAccount = JSON.parse(googleServiceAccount);
 
+        // Helper function for base64url encoding
+        const base64url = (data: string | ArrayBuffer): string => {
+          let base64;
+          if (typeof data === 'string') {
+            base64 = btoa(data);
+          } else {
+            base64 = btoa(String.fromCharCode(...new Uint8Array(data)));
+          }
+          return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+        };
+
         // Create JWT for Google OAuth
-        const header = btoa(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+        const header = base64url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
         const now = Math.floor(Date.now() / 1000);
-        const claim = btoa(JSON.stringify({
+        const claim = base64url(JSON.stringify({
           iss: serviceAccount.client_email,
           scope: "https://www.googleapis.com/auth/spreadsheets",
           aud: "https://oauth2.googleapis.com/token",
@@ -102,19 +115,30 @@ Deno.serve(async (req: Request) => {
         }));
 
         const signatureInput = `${header}.${claim}`;
+
+        // Import private key
+        const privateKeyPem = serviceAccount.private_key;
+        const pemContents = privateKeyPem
+          .replace(/-----BEGIN PRIVATE KEY-----/, '')
+          .replace(/-----END PRIVATE KEY-----/, '')
+          .replace(/\s/g, '');
+        const binaryKey = Uint8Array.from(atob(pemContents), c => c.charCodeAt(0));
+
         const key = await crypto.subtle.importKey(
           "pkcs8",
-          Uint8Array.from(atob(serviceAccount.private_key.replace(/-----BEGIN PRIVATE KEY-----|-----END PRIVATE KEY-----|\n/g, "")), c => c.charCodeAt(0)),
+          binaryKey,
           { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
           false,
           ["sign"]
         );
+
         const signature = await crypto.subtle.sign(
           "RSASSA-PKCS1-v1_5",
           key,
           new TextEncoder().encode(signatureInput)
         );
-        const jwt = `${signatureInput}.${btoa(String.fromCharCode(...new Uint8Array(signature)))}`;
+
+        const jwt = `${signatureInput}.${base64url(signature)}`;
 
         // Get access token
         const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
