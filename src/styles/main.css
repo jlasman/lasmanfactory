@@ -230,7 +230,7 @@ section > *:first-child {
 
 /* Work Section */
 .work {
-    padding: 8rem 0;
+    padding: 8rem 0 12rem 0;
     background: #121212;
 }
 
