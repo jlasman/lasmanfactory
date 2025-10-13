@@ -9,6 +9,15 @@ export default function Hero() {
   return (
     <section id="home" className="hero">
       <div className="hero__background">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="hero__video"
+        >
+          <source src="/assets/hero-bg.mp4" type="video/mp4" />
+        </video>
         <div className="hero__video-overlay"></div>
       </div>
       <div className="hero__content">
