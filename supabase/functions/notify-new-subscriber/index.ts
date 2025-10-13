@@ -13,7 +13,7 @@ interface SubscriberPayload {
     id: string;
     email: string;
     status: string;
-    created_at: string;
+    subscribed_at: string;
   };
 }
 
@@ -57,14 +57,13 @@ Deno.serve(async (req: Request) => {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${resendApiKey}`,
           },
-          body: JSON.stringify({
-            from: "The Lab <notifications@yourdomain.com>",
+          body: JSON.stringify({            from: "onboarding@resend.dev",
             to: [notificationEmail],
             subject: "New Newsletter Subscriber",
             html: `
               <h2>New Newsletter Subscriber</h2>
               <p><strong>Email:</strong> ${record.email}</p>
-              <p><strong>Subscribed at:</strong> ${new Date(record.created_at).toLocaleString()}</p>
+              <p><strong>Subscribed at:</strong> ${new Date(record.subscribed_at).toLocaleString()}</p>
               <p><strong>Status:</strong> ${record.status}</p>
             `,
           }),
@@ -84,42 +83,85 @@ Deno.serve(async (req: Request) => {
     }
 
     // Add to Google Sheets
-    const googleSheetsApiKey = Deno.env.get("GOOGLE_SHEETS_API_KEY");
+    const googleServiceAccount = Deno.env.get("GOOGLE_SERVICE_ACCOUNT_JSON");
     const spreadsheetId = Deno.env.get("GOOGLE_SPREADSHEET_ID");
 
-    if (googleSheetsApiKey && spreadsheetId) {
+    if (googleServiceAccount && spreadsheetId) {
       try {
-        const range = "Sheet1!A:C";
-        const values = [[
-          record.email,
-          new Date(record.created_at).toLocaleString(),
-          record.status,
-        ]];
+        const serviceAccount = JSON.parse(googleServiceAccount);
 
-        const sheetsResponse = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&key=${googleSheetsApiKey}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              values: values,
-            }),
-          }
+        // Create JWT for Google OAuth
+        const header = btoa(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+        const now = Math.floor(Date.now() / 1000);
+        const claim = btoa(JSON.stringify({
+          iss: serviceAccount.client_email,
+          scope: "https://www.googleapis.com/auth/spreadsheets",
+          aud: "https://oauth2.googleapis.com/token",
+          exp: now + 3600,
+          iat: now,
+        }));
+
+        const signatureInput = `${header}.${claim}`;
+        const key = await crypto.subtle.importKey(
+          "pkcs8",
+          Uint8Array.from(atob(serviceAccount.private_key.replace(/-----BEGIN PRIVATE KEY-----|-----END PRIVATE KEY-----|\n/g, "")), c => c.charCodeAt(0)),
+          { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+          false,
+          ["sign"]
         );
+        const signature = await crypto.subtle.sign(
+          "RSASSA-PKCS1-v1_5",
+          key,
+          new TextEncoder().encode(signatureInput)
+        );
+        const jwt = `${signatureInput}.${btoa(String.fromCharCode(...new Uint8Array(signature)))}`;
 
-        if (sheetsResponse.ok) {
-          results.sheets.success = true;
+        // Get access token
+        const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+        });
+
+        const tokenData = await tokenResponse.json();
+
+        if (!tokenData.access_token) {
+          results.sheets.error = `Failed to get access token: ${JSON.stringify(tokenData)}`;
         } else {
-          const error = await sheetsResponse.text();
-          results.sheets.error = `Google Sheets API error: ${error}`;
+          // Append to sheet
+          const range = "Sheet1!A:C";
+          const values = [[
+            record.email,
+            new Date(record.subscribed_at).toLocaleString(),
+            record.status,
+          ]];
+
+          const sheetsResponse = await fetch(
+            `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${tokenData.access_token}`,
+              },
+              body: JSON.stringify({
+                values: values,
+              }),
+            }
+          );
+
+          if (sheetsResponse.ok) {
+            results.sheets.success = true;
+          } else {
+            const error = await sheetsResponse.text();
+            results.sheets.error = `Google Sheets API error: ${error}`;
+          }
         }
       } catch (error) {
         results.sheets.error = `Sheets error: ${error.message}`;
       }
     } else {
-      results.sheets.error = "Google Sheets API key or spreadsheet ID not configured";
+      results.sheets.error = "Google Service Account JSON or spreadsheet ID not configured";
     }
 
     return new Response(
