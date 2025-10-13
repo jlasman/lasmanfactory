@@ -48,7 +48,9 @@ Deno.serve(async (req: Request) => {
     // Send email notification via Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     const notificationEmail = Deno.env.get("NOTIFICATION_EMAIL");
-    const fromEmail = Deno.env.get("FROM_EMAIL") || "onboarding@resend.dev";
+    // Default to resend test email which works without domain verification
+    const fromEmail = Deno.env.get("FROM_EMAIL");
+    const finalFromEmail = fromEmail || "onboarding@resend.dev";
 
     if (resendApiKey && notificationEmail) {
       try {
@@ -59,7 +61,7 @@ Deno.serve(async (req: Request) => {
             "Authorization": `Bearer ${resendApiKey}`,
           },
           body: JSON.stringify({
-            from: fromEmail,
+            from: finalFromEmail,
             to: [notificationEmail],
             subject: "New Newsletter Subscriber",
             html: `
@@ -87,6 +89,7 @@ Deno.serve(async (req: Request) => {
     // Add to Google Sheets
     const googleServiceAccount = Deno.env.get("GOOGLE_SERVICE_ACCOUNT_JSON");
     const spreadsheetId = Deno.env.get("GOOGLE_SPREADSHEET_ID");
+    const sheetName = Deno.env.get("GOOGLE_SHEET_NAME") || "Sheet1";
 
     if (googleServiceAccount && spreadsheetId) {
       try {
@@ -153,7 +156,7 @@ Deno.serve(async (req: Request) => {
           results.sheets.error = `Failed to get access token: ${JSON.stringify(tokenData)}`;
         } else {
           // Append to sheet
-          const range = "Sheet1!A:C";
+          const range = `${sheetName}!A:C`;
           const values = [[
             record.email,
             new Date(record.subscribed_at).toLocaleString(),
