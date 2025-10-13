@@ -59,38 +59,43 @@ const workData = {
 }
 
 export default function Work() {
-  const [activeSpoke, setActiveSpoke] = useState('ventures')
+  const [expandedSpoke, setExpandedSpoke] = useState('ventures')
+
+  const toggleSpoke = (spoke) => {
+    setExpandedSpoke(expandedSpoke === spoke ? null : spoke)
+  }
 
   return (
     <section id="work" className="work">
       <div className="container">
         <h2 className="work__headline">From the Lab to the Real World.</h2>
 
-        <div className="work__cards">
+        <div className="work__accordion">
           <WorkCard
+            id="ventures"
             title="Commercial Ventures"
             description="Applying our core R&D to build scalable companies and premium advisory services for ambitious leaders and industries."
-            ctaText="Explore Our Companies →"
-            active={activeSpoke === 'ventures'}
-            onClick={() => setActiveSpoke('ventures')}
+            expanded={expandedSpoke === 'ventures'}
+            onToggle={() => toggleSpoke('ventures')}
+            data={workData.ventures}
           />
           <WorkCard
+            id="creations"
             title="Artistic Creations"
             description="Using film, writing, and the curation of fine art to explore the boundaries of human potential and our technological future."
-            ctaText="View Our Creations →"
-            active={activeSpoke === 'creations'}
-            onClick={() => setActiveSpoke('creations')}
+            expanded={expandedSpoke === 'creations'}
+            onToggle={() => toggleSpoke('creations')}
+            data={workData.creations}
           />
           <WorkCard
+            id="initiatives"
             title="Philanthropic Initiatives"
             description="Deploying our frameworks and resources toward mission-driven projects aimed at creating a more conscious and equitable world."
-            ctaText="Learn About Our Initiatives →"
-            active={activeSpoke === 'initiatives'}
-            onClick={() => setActiveSpoke('initiatives')}
+            expanded={expandedSpoke === 'initiatives'}
+            onToggle={() => toggleSpoke('initiatives')}
+            data={workData.initiatives}
           />
         </div>
-
-        <WorkContent data={workData[activeSpoke]} />
       </div>
     </section>
   )

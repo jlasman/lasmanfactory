@@ -242,82 +242,126 @@ section > *:first-child {
     letter-spacing: -0.02em;
 }
 
-.work__cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
+.work__accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.work__card-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
 .work__card {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     border: 1px solid #333;
+    outline: none;
 }
 
 .work__card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
 }
 
-.work__card.active {
+.work__card:focus-visible {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.work__card--expanded {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-color: transparent;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.work__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.work__card-text {
+    flex: 1;
 }
 
 .work__card-title {
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
 }
 
 .work__card-description {
     color: #cccccc;
-    margin-bottom: 2rem;
     line-height: 1.6;
+    margin: 0;
+    font-size: 1rem;
 }
 
-.work__card.active .work__card-description {
+.work__card--expanded .work__card-description {
     color: #f0f0f0;
 }
 
-.work__card-cta {
-    background: transparent;
-    color: #667eea;
-    border: 2px solid #667eea;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    cursor: pointer;
+.work__card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
     transition: all 0.3s ease;
-    font-weight: 500;
 }
 
-.work__card.active .work__card-cta {
+.work__card--expanded .work__card-icon {
     background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.work__card-cta:hover {
-    background: #667eea;
-    color: white;
+.work__card-chevron {
+    transition: transform 0.3s ease;
+    color: #cccccc;
 }
 
-.work__content {
+.work__card--expanded .work__card-chevron {
+    transform: rotate(180deg);
+    color: #ffffff;
+}
+
+.work__card-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+.work__card-content--expanded {
+    max-height: 5000px;
+    opacity: 1;
+    margin-top: 1.5rem;
+}
+
+.work__card-content-inner {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    padding: 3rem;
-    border-radius: 20px;
+    padding: 2.5rem;
+    border-radius: 16px;
     border: 1px solid #333;
 }
 
 .work__content-headline {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 600;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    color: #ffffff;
+    text-align: center;
 }
 
 /* Shared list wrapper for work spokes */
@@ -926,25 +970,52 @@ button.work__spoke-btn, .work__spoke-btn, .work__spoke .work__spoke-btn {
     .nav__menu {
         display: none;
     }
-    
+
     .creator__content {
         grid-template-columns: 1fr;
         text-align: center;
     }
     .creator__image { justify-self: center; }
-    
-    .work__cards {
-        grid-template-columns: 1fr;
+
+    .work__accordion {
+        gap: 1rem;
     }
-    
-    .work__content {
-        padding: 2rem;
+
+    .work__card {
+        padding: 1.5rem;
+    }
+
+    .work__card-header {
+        gap: 1rem;
+    }
+
+    .work__card-title {
+        font-size: 1.25rem;
+    }
+
+    .work__card-description {
+        font-size: 0.95rem;
+    }
+
+    .work__card-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .work__card-content-inner {
+        padding: 1.5rem;
+    }
+
+    .work__content-headline {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .work__spoke {
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
     }
     .work__spoke-media,
     .work__spoke-logo {
@@ -954,6 +1025,7 @@ button.work__spoke-btn, .work__spoke-btn, .work__spoke .work__spoke-btn {
     }
     .work__spoke-list {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
     
     .container {
