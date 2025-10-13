@@ -71,34 +71,49 @@ export default function Work() {
         <h2 className="work__headline">From the Lab to the Real World.</h2>
 
         <div className="work__grid">
-          <WorkCard
-            id="ventures"
-            title="Commercial Ventures"
-            description="Applying our core R&D to build scalable companies and premium advisory services for ambitious leaders and industries."
-            expanded={expandedSpoke === 'ventures'}
-            onToggle={() => toggleSpoke('ventures')}
-          />
-          <WorkCard
-            id="creations"
-            title="Artistic Creations"
-            description="Using film, writing, and the curation of fine art to explore the boundaries of human potential and our technological future."
-            expanded={expandedSpoke === 'creations'}
-            onToggle={() => toggleSpoke('creations')}
-          />
-          <WorkCard
-            id="initiatives"
-            title="Philanthropic Initiatives"
-            description="Deploying our frameworks and resources toward mission-driven projects aimed at creating a more conscious and equitable world."
-            expanded={expandedSpoke === 'initiatives'}
-            onToggle={() => toggleSpoke('initiatives')}
-          />
+          <div className="work__card-wrapper">
+            <WorkCard
+              id="ventures"
+              title="Commercial Ventures"
+              description="Applying our core R&D to build scalable companies and premium advisory services for ambitious leaders and industries."
+              expanded={expandedSpoke === 'ventures'}
+              onToggle={() => toggleSpoke('ventures')}
+            />
+            <div className="work__mobile-content">
+              {expandedSpoke === 'ventures' && <WorkContent data={workData.ventures} />}
+            </div>
+          </div>
+
+          <div className="work__card-wrapper">
+            <WorkCard
+              id="creations"
+              title="Artistic Creations"
+              description="Using film, writing, and the curation of fine art to explore the boundaries of human potential and our technological future."
+              expanded={expandedSpoke === 'creations'}
+              onToggle={() => toggleSpoke('creations')}
+            />
+            <div className="work__mobile-content">
+              {expandedSpoke === 'creations' && <WorkContent data={workData.creations} />}
+            </div>
+          </div>
+
+          <div className="work__card-wrapper">
+            <WorkCard
+              id="initiatives"
+              title="Philanthropic Initiatives"
+              description="Deploying our frameworks and resources toward mission-driven projects aimed at creating a more conscious and equitable world."
+              expanded={expandedSpoke === 'initiatives'}
+              onToggle={() => toggleSpoke('initiatives')}
+            />
+            <div className="work__mobile-content">
+              {expandedSpoke === 'initiatives' && <WorkContent data={workData.initiatives} />}
+            </div>
+          </div>
         </div>
 
-        {expandedSpoke && (
-          <div className="work__drawer">
-            <WorkContent data={workData[expandedSpoke]} />
-          </div>
-        )}
+        <div className="work__drawer">
+          {expandedSpoke && <WorkContent data={workData[expandedSpoke]} />}
+        </div>
       </div>
     </section>
   )
