@@ -243,11 +243,18 @@ section > *:first-child {
 }
 
 .work__accordion {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
-    max-width: 1000px;
+    max-width: 100%;
     margin: 0 auto;
+}
+
+@media (min-width: 769px) {
+    .work__accordion {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
 }
 
 .work__card-wrapper {
@@ -347,6 +354,21 @@ section > *:first-child {
     max-height: 5000px;
     opacity: 1;
     margin-top: 1.5rem;
+}
+
+@media (min-width: 769px) {
+    .work__card-content--expanded {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        margin-top: 1rem;
+    }
+
+    .work__card-wrapper {
+        position: relative;
+    }
 }
 
 .work__card-content-inner {

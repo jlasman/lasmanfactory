@@ -59,7 +59,7 @@ const workData = {
 }
 
 export default function Work() {
-  const [expandedSpoke, setExpandedSpoke] = useState('ventures')
+  const [expandedSpoke, setExpandedSpoke] = useState(null)
 
   const toggleSpoke = (spoke) => {
     setExpandedSpoke(expandedSpoke === spoke ? null : spoke)
